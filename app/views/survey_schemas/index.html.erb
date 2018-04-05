@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+  <div class="page-header">
+    <div class="header">
+      <h1> Pautas de evaluación </h1>
+    </div>
+  </div>
+  <div class="index">
+    <div id="table-wrapper">
+      <div id="table-scroll">
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr class="primary">
+              <th class="panel-title"></th>
+              <th><%= link_to "Titulo", index_survey_schemas_path(sort:"Titulo") %></th>
+              <th><%= link_to "Ciclo", index_survey_schemas_path(sort:"Ciclo") %></th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% contador = 0%>
+            <% @survey_schemas.each do |survey_schema|%>
+            <tr>
+              <% contador +=1 %>
+              <td> <%= contador %></td>
+              <td><%= link_to survey_schema.title, survey_schema %></td>
+              <% if survey_schema.cycle == '1' %>
+                <td> Primero </td>
+              <% elsif survey_schema.cycle == '2' %>
+                <td> Segundo </td>
+              <% else %>
+                <td> Tercero </td>
+              <%end%>
+              <td><%= link_to 'Editar', edit_survey_schema_path(survey_schema) %> </td>
+              <td> <%= link_to 'Eliminar', survey_schema, method: :delete, data: { confirm: 'Está seguro?' } %></td>
+            </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <div class="btn-group btn-group-justified">
+      <p><a href="survey_schemas/new" class="btn btn-primary btn-lg">Nueva pauta</a></p>
+    </div>
+  </div>

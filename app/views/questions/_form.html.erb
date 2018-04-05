@@ -1,0 +1,64 @@
+
+
+<div class="form-horizontal">
+  <div class="form1">
+    <fieldset>
+      <legend class="question_title">Nueva pregunta</legend>
+      <% if flash[:notice] %>
+        <h5 class="question_title"> <%= flash[:notice] %> </h5>
+      <% end %>
+
+      <%= simple_form_for @question do |f| %>
+      <% if question.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+          <ul>
+          <% question.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+        <%= f.input :name, :label => "Escriba la pregunta a continuación:", as: :text, required: true%>
+        <div class="radios">
+          <div class="selectWrapper">
+            <div class="type_title"> Seleccione categoría de la pregunta: </div>
+            <div class="radioWrapper">
+              <% for item in @categories %>
+                <div class="radioOption">
+                <input required id="category_<%=item[0]%>" name="question[category]" type="radio" value=<%=item[0]%> />
+                <label for="category"><%=@categories[item[0]]%></label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="selectWrapper">
+          <div class="type_title"> Seleccione habilidad relacionada a pregunta: </div>
+            <% for item in @skills %>
+            <div class="radioOption">
+              <input required id="skill_<%=item%>" name="question[skill]" type="radio" value="<%=item%>" />
+              <label for="skill"><%=item%></label>
+
+            </div>
+
+            <% end %>
+            <input type="hidden" name="question[genre]" value="score"/>
+          </div>
+        </div>
+
+          <br>
+        <div class="btn-group btn-group-justified">
+          <p><a href="/questions" class="btn btn-primary btn-sm">Regresar</a>
+            <%= f.button :submit, 'Guardar'%>
+          </p>
+        </div>
+      <% end %>
+
+    </fieldset>
+    <br>
+
+  </div>
+
+</div>
